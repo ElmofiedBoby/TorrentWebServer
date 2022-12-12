@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <head>
     <title>Selection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
 </head>
 <body>
+    <ul>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/downloads">Downloads</a></li>
+    </ul>
     <h1>Torrent Information</h1>
     <h2>{{ name }}</h2>
     <h3><em>{{ category }} | {{ type }} | {{ language }} | {{ downloads }} downloads</em></h3>

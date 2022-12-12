@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <head>
     <title>Downloads</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
     <script src="{{ url_for('static', filename='downloads.js')}}"></script>
 </head>
 <body>
+    <ul>
+        <li><a href="/search">Search</a></li>
+        <li><a class="active" href="/downloads">Downloads</a></li>
+    </ul>
     <h1>Current Downloads</h1>
     <div id="table">
         {{ table|safe }}

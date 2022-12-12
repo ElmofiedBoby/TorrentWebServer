@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <head>
     <title>Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
 </head>
 <body>
+    <ul>
+        <li><a class="active" href="/search">Search</a></li>
+        <li><a href="/downloads">Downloads</a></li>
+    </ul>
     <h1>Search your desired torrent</h1>
     <form action="/search" method="POST">
         <input type="text" name="search" id="search">
