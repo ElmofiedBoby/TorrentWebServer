@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from py1337x import py1337x
 import json
 import sys
@@ -12,7 +12,7 @@ def bruh():
     return "bruh"
 
 @app.route("/search", methods=['GET', 'POST'])
-def searchpage():
+def search():
     if request.method == "POST":
         search = request.form.get("search")
         results = torrents.search(search)["items"]
@@ -25,8 +25,12 @@ def searchpage():
     else:
         return render_template('search.html')
 
+@app.route("/")
+def home():
+    return redirect(url_for("search"))
+
 @app.route("/select/<torrentId>")
-def selection(torrentId):
+def select(torrentId):
     torrentinfo = torrents.info(torrentId=torrentId)
     return render_template('select.html', name=torrentinfo['name'], category=torrentinfo['category'], type=torrentinfo['type'], language=torrentinfo['language'], downloads=torrentinfo['downloads'], link=torrentinfo['magnetLink'])
 
