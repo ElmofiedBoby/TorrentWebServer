@@ -8,15 +8,11 @@ import sys
 import os
 import json
 
-download_path = os.path.join(os.getcwd(), 'download')
+download_path = os.path.join(os.path.join(os.getcwd(), 'static'), 'downloads')
 app = Flask(__name__)
 portNumber = sys.argv[1]
 torrents = py1337x()
 tm = TorrentManager(download_path, dotenv_values(".env"))
-
-@app.route("/bruh")
-def bruh():
-    return "bruh"
 
 @app.route("/search", methods=['GET', 'POST'])
 def search():
