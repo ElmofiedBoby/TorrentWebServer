@@ -21,8 +21,14 @@ class TorrentManager:
             print(f'{torrent.hash[-6:]}: {torrent.name} ({torrent.state})')
     
     def add_torrent(self, magnet):
-        self.client.torrents_add(urls=magnet, save_path=self.download_path)
+        return self.client.torrents_add(urls=magnet, save_path=self.download_path)
 
     def delete_all_torrents(self):
         self.client.torrents.delete.all()
+
+    def maindata(self):
+        return self.client.sync.maindata()
+
+    def get_torrents(self):
+            return self.client.torrents_info()
     

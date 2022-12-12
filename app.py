@@ -1,11 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from py1337x import py1337x
-import json
-import sys
+from dotenv import dotenv_values
+from TorrentManager import TorrentManager
+from AttrDictJson import as_attrdict
 
+import sys
+import os
+import json
+
+download_path = os.path.join(os.getcwd(), 'download')
 app = Flask(__name__)
 portNumber = sys.argv[1]
 torrents = py1337x()
+tm = TorrentManager(download_path, dotenv_values(".env"))
 
 @app.route("/bruh")
 def bruh():
@@ -33,6 +40,40 @@ def home():
 def select(torrentId):
     torrentinfo = torrents.info(torrentId=torrentId)
     return render_template('select.html', name=torrentinfo['name'], category=torrentinfo['category'], type=torrentinfo['type'], language=torrentinfo['language'], downloads=torrentinfo['downloads'], link=torrentinfo['magnetLink'])
+
+@app.route("/downloads", methods=['GET', 'POST'])
+def downloads():
+    # If there is a POST, start downloading
+    if request.method == "POST":
+        name, link = request.form.get("torrentinfo").split("|")
+        tm.add_torrent(link)
+
+    # for both POST and GET, get all downloads and progress
+    html = '''
+                <table border=1>
+                    <tr>
+                        <th>Name</th>
+                        <th>Progress</th>
+                        <th>Status</th>
+                        <th>Toggle</th>
+                        <th>Delete</th>
+                    </tr>
+            '''
+    for torrent in tm.get_torrents():
+        html += '<tr><td>'+torrent.name+'</td><td id="progress" name="progress">'+str(torrent.progress)+'</td><td>'+torrent.state+'</td><td><input type="submit" value="Pause/Resume"></td><td><input name=\"'+torrent.name+'\" type=\"checkbox\"></td></tr>'
+    
+    html += "</table><br><input type=\"submit\" value=\"Delete All\">"
+
+    return render_template('downloads.html', table=html)
+
+@app.route("/query/all/info")
+def ReturnJSON():
+    return json.dumps(tm.maindata()['torrents'], default=as_attrdict)
+
+@app.route("/query/all/delete")
+def deleteAll():
+    tm.delete_all_torrents()
+    return jsonify(success='true')
 
 if __name__ == '__main__':
     app.run(host='localhost', port=portNumber)

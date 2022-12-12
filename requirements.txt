@@ -2,3 +2,4 @@ qbittorrent-api
 flask
 python-dotenv
 1337x
+attrdict

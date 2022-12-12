@@ -6,6 +6,9 @@
     <h1>Torrent Information</h1>
     <h2>{{ name }}</h2>
     <h3><em>{{ category }} | {{ type }} | {{ language }} | {{ downloads }} downloads</em></h3>
-    <h4><a href="{{ link }}">MAGNET</a></h4>
+    <form action="/downloads" method="POST">
+        <h4><input type="text" name="torrentinfo" value="{{ name }}|{{ link }}" diabled></h4>
+        <input type="submit" value="Start Download">
+    </form>
 </body>
-</html
+</html>

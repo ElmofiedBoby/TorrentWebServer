@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head>
+    <title>Downloads</title>
+    <script src="{{ url_for('static', filename='downloads.js')}}"></script>
+</head>
+<body>
+    <h1>Current Downloads</h1>
+    <div id="table">
+        {{ table|safe }}
+    </div>
+</body>
+</html
