@@ -4,6 +4,7 @@ from dotenv import dotenv_values
 from TorrentManager import TorrentManager
 from AttrDictJson import as_attrdict
 
+import shutil
 import sys
 import os
 import json
@@ -41,8 +42,7 @@ def select(torrentId):
 def downloads():
     # If there is a POST, start downloading
     if request.method == "POST":
-        name, link = request.form.get("torrentinfo").split("|")
-        tm.add_torrent(link)
+        tm.add_torrent(request.form.get("torrentinfo"))
 
     # for both POST and GET, get all downloads and progress
     html = '''
@@ -69,6 +69,8 @@ def ReturnJSON():
 @app.route("/query/all/delete")
 def deleteAll():
     tm.delete_all_torrents()
+    shutil.rmtree(download_path)
+    os.mkdir(download_path)
     return jsonify(success='true')
 
 if __name__ == '__main__':

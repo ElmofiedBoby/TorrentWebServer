@@ -2,5 +2,4 @@
 .env
 __pycache__
 static/download/*
-!static/download/.gitkeep
 *.sqlite
