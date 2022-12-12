@@ -15,6 +15,9 @@ portNumber = sys.argv[1]
 torrents = py1337x()
 tm = TorrentManager(download_path, dotenv_values(".env"))
 
+if os.path.exists(download_path) == False:
+    os.mkdir(download_path)
+
 @app.route("/search", methods=['GET', 'POST'])
 def search():
     if request.method == "POST":
