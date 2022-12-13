@@ -1,6 +1,6 @@
 function updateProgress() {
     var request = new XMLHttpRequest(); // Create a request variable and assign a new XMLHttpRequest object to it.
-    request.open('GET', 'http://localhost:5000/query/all/info'); // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', 'http://localhost:'+location.port+'/query/all/info'); // Open a new connection, using the GET request on the URL endpoint
     request.send();
     
     request.onload = async function () {
@@ -19,8 +19,16 @@ function updateProgress() {
 
 function deleteAll() {
     var request = new XMLHttpRequest(); // Create a request variable and assign a new XMLHttpRequest object to it.
-    request.open('GET', 'http://localhost:5000/query/all/delete'); // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', 'http://localhost:'+location.port+'/query/all/delete'); // Open a new connection, using the GET request on the URL endpoint
     request.send();
+}
+
+function pauseTorrent() {
+    
+}
+
+function stopUpdating(updater) {
+    clearInterval(updater);
 }
 
 const updater = setInterval(updateProgress, 5000);
