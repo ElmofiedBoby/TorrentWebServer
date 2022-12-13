@@ -12,7 +12,7 @@
     <h2>{{ name }}</h2>
     <h3><em>{{ category }} | {{ type }} | {{ language }} | {{ downloads }} downloads</em></h3>
     <form name="form" id="form" action="/downloads" method="POST">
-        <input type="text" id="torrentinfo" name="torrentinfo" value="{{ link }}">
+        <input type="text" id="torrentinfo" name="torrentinfo" value="{{ link }}" readonly>
         <input type="submit" value="Start Download">
     </form>
 </body>
